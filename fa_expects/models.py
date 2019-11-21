@@ -25,18 +25,18 @@ class Players(models.Model):
 
     NPB_TEAM_CHOICES = (
         ('', '選択'),
-        ('1', '西武'),
-        ('2', 'ソフトバンク'),
-        ('3', '楽天'),
-        ('4', 'ロッテ'),
-        ('5', '日本ハム'),
-        ('6', 'オリックス'),
-        ('7', '巨人'),
-        ('8', 'DeNA'),
-        ('9', '阪神'),
-        ('10', '広島'),
-        ('11', '中日'),
-        ('12', 'ヤクルト'),
+        (1, '西武'),
+        (2, 'ソフトバンク'),
+        (3, '楽天'),
+        (4, 'ロッテ'),
+        (5, '日本ハム'),
+        (6, 'オリックス'),
+        (7, '巨人'),
+        (8, 'DeNA'),
+        (9, '阪神'),
+        (10, '広島'),
+        (11, '中日'),
+        (12, 'ヤクルト'),
     )
 
     name = models.CharField(
@@ -73,7 +73,7 @@ class Players(models.Model):
     )
 
     def __str__(self):
-        return f'{self.name} : {self.POSITION_CHOICES[self.position]} : {self.NPB_TEAM_CHOICES[self.department]}'
+        return f'{self.name} : {self.POSITION_CHOICES[self.position][1]} : {self.NPB_TEAM_CHOICES[self.department][1]}'
 
     class Meta:
         verbose_name = "選手情報"
