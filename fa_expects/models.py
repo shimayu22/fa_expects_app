@@ -117,6 +117,7 @@ class FaExpects(models.Model):
         Players,
         on_delete=models.CASCADE,
         verbose_name="選手",
+        limit_choices_to={"position":1,}
     )
 
     priority = models.IntegerField(
