@@ -83,7 +83,7 @@ class Players(models.Model):
 class RequestedConditions(models.Model):
 
     POSITION_CHOICES = (
-        (0, 'なし'),
+        ('', 'なし'),
         (1, '投手'),
         (2, '捕手'),
         (3, '一塁手'),
@@ -91,8 +91,6 @@ class RequestedConditions(models.Model):
         (5, '三塁手'),
         (6, '遊撃手'),
         (7, '外野手'),
-        (8, '内野手'),
-        (9, '野手'),
     )
 
     DOMINANT_HAND_CHOICES = (
@@ -132,6 +130,10 @@ class RequestedConditions(models.Model):
         verbose_name = "要望"
         verbose_name_plural = "要望"
 
+def age_condition():
+    age = RequestedConditions.objects.latest('pk').age
+    return 99 if age == 0 else age
+
 class FaExpects(models.Model):
 
     PRIORITY_CHOICES = (
@@ -168,7 +170,8 @@ class FaExpects(models.Model):
         Players,
         on_delete=models.CASCADE,
         verbose_name="選手",
-        limit_choices_to={"position":RequestedConditions.objects.latest('pk').position,},
+        limit_choices_to={"age__lt": age_condition(),
+                          "position": RequestedConditions.objects.latest('pk').position},
     )
 
     priority = models.IntegerField(
