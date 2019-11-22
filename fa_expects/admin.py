@@ -9,7 +9,7 @@ class PlayersAdmin(admin.ModelAdmin):
                     'department',)
 
 class FaExpectsAdmin(admin.ModelAdmin):
-    list_display = ('priority', 'player_id',)
+    list_display = ('team', 'priority', 'player_id',)
 
 admin.site.register(Players, PlayersAdmin)
 admin.site.register(FaExpects, FaExpectsAdmin)

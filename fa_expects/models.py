@@ -85,10 +85,32 @@ class FaExpects(models.Model):
 
     PRIORITY_CHOICES = (
         ('', '選択'),
-        ('1', '第一希望'),
-        ('2', '第二希望'),
-        ('3', '第三希望'),
-        ('4', '第四希望以降'),
+        (1, '第一希望'),
+        (2, '第二希望'),
+        (3, '第三希望'),
+        (4, '第四希望以降'),
+    )
+
+    NPB_TEAM_CHOICES = (
+        ('', '選択'),
+        (1, '西武'),
+        (2, 'ソフトバンク'),
+        (3, '楽天'),
+        (4, 'ロッテ'),
+        (5, '日本ハム'),
+        (6, 'オリックス'),
+        (7, '巨人'),
+        (8, 'DeNA'),
+        (9, '阪神'),
+        (10, '広島'),
+        (11, '中日'),
+        (12, 'ヤクルト'),
+    )
+
+    team = models.IntegerField(
+        verbose_name="球団",
+        choices=NPB_TEAM_CHOICES,
+        default=0,
     )
 
     player_id = models.ForeignKey(
@@ -109,7 +131,7 @@ class FaExpects(models.Model):
     )
 
     def __str__(self):
-        return f'{self.player_id} : {self.PRIORITY_CHOICES[self.priority]}'
+        return f'{self.player_id} : {self.PRIORITY_CHOICES[self.priority][1]}'
 
     class Meta:
         verbose_name = "FA予想"
