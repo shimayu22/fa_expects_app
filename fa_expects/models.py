@@ -80,6 +80,57 @@ class Players(models.Model):
         verbose_name_plural = "選手情報"
         ordering = ['department', 'position']
 
+class RequestedConditions(models.Model):
+
+    POSITION_CHOICES = (
+        (0, 'なし'),
+        (1, '投手'),
+        (2, '捕手'),
+        (3, '一塁手'),
+        (4, '二塁手'),
+        (5, '三塁手'),
+        (6, '遊撃手'),
+        (7, '外野手'),
+        (8, '内野手'),
+        (9, '野手'),
+    )
+
+    DOMINANT_HAND_CHOICES = (
+        (0, 'なし'),
+        (1, '右投右打'),
+        (2, '右投左打'),
+        (3, '右投両打'),
+        (4, '左投左打'),
+    )
+
+    age = models.PositiveSmallIntegerField(
+        verbose_name="年齢",
+        default=0,
+    )
+
+    position = models.IntegerField(
+        verbose_name="メインポジション",
+        choices=POSITION_CHOICES,
+        default=0,
+    )
+
+    dominant_hand = models.IntegerField(
+        verbose_name="利き手",
+        choices=DOMINANT_HAND_CHOICES,
+        default=0,
+    )
+
+    created_at = models.DateTimeField(
+        verbose_name="登録日",
+        auto_now_add=True,
+    )
+
+    def __str__(self):
+        return f'{self.age} : {self.POSITION_CHOICES[self.position][1]} : {self.DOMINANT_HAND_CHOICES[self.dominant_hand][1]}'
+
+    class Meta:
+        verbose_name = "要望"
+        verbose_name_plural = "要望"
 
 class FaExpects(models.Model):
 
@@ -117,7 +168,7 @@ class FaExpects(models.Model):
         Players,
         on_delete=models.CASCADE,
         verbose_name="選手",
-        limit_choices_to={"position":1,}
+        limit_choices_to={"position":RequestedConditions.objects.latest('pk').position,},
     )
 
     priority = models.IntegerField(
